@@ -23,4 +23,28 @@ public class PersonController {
         person = personService.create(person);
         return new ResponseEntity<>(person, HttpStatus.CREATED);
     }
+
+    @GetMapping
+    public ResponseEntity<Iterable<Person>> getAll(){
+        Iterable<Person> people = personService.getAllPeople();
+        return new ResponseEntity<>(people, HttpStatus.OK);
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<Person> getById(@PathVariable("id") Long id){
+        Person person = personService.getById(id);
+        return new ResponseEntity<>(person, HttpStatus.OK);
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<Person> updated(@PathVariable("id") Long id, @RequestBody Person personDetail){
+        Person person = personService.update(id, personDetail);
+        return new ResponseEntity<>(person, HttpStatus.ACCEPTED);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<HttpStatus> delete(@PathVariable("id") Long id){
+        personService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

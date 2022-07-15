@@ -29,26 +29,38 @@ public class PersonServiceImpl implements PersonService{
 
     @Override
     public Person getById(Long id) throws ResourceNotFoundException {
-        return null;
+       Person person = personRepo.findById(id)
+               .orElseThrow(() -> new ResourceNotFoundException("User with id does not exists " + id));
+        return person;
     }
 
     @Override
     public List<Person> getAllPeople() {
-        return null;
+        return personRepo.findAll();
     }
 
     @Override
     public List<Person> getByLastName(String lastName) throws ResourceNotFoundException {
-        return null;
+        List<Person> people = (List) personRepo.findByLastName(lastName);
+        if(people.size() == 0)
+            throw new ResourceNotFoundException("No users with last name " + lastName);
+        return people;
     }
 
     @Override
     public Person update(Long id, Person personDetail) throws ResourceNotFoundException {
-        return null;
+        Person savedPerson = getById(id);
+        savedPerson.setFirstName(personDetail.getFirstName());
+        savedPerson.setLastName(personDetail.getLastName());
+        savedPerson.setAge(personDetail.getAge());
+        savedPerson.setUserName(personDetail.getUserName());
+        savedPerson.setWeight(personDetail.getWeight());
+        return personRepo.save(savedPerson);
     }
 
     @Override
     public void delete(Long id) throws ResourceNotFoundException {
-
+        Person person = getById(id);
+        personRepo.delete(person);
     }
 }

@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface PersonRepo extends JpaRepository<Person, Long> {
     Optional<Person> findByUserName(String userName);
+    Iterable<Person> findByLastName(String lastName);
 }

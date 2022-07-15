@@ -32,7 +32,7 @@ public class Person {
     @NonNull
     private Double weight;
 
-    @OneToMany(cascade =  CascadeType.ALL)
+    @OneToMany(cascade =  CascadeType.ALL, mappedBy = "person")
     private List<Log> logs;
 
 
