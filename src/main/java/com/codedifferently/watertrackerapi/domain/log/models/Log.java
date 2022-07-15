@@ -1,6 +1,8 @@
 package com.codedifferently.watertrackerapi.domain.log.models;
 
 import com.codedifferently.watertrackerapi.domain.person.models.Person;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -25,7 +27,7 @@ public class Log {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
-    @ManyToOne
+    @ManyToOne(cascade =  CascadeType.ALL)
     private Person person;
 
     @PrePersist
