@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -47,7 +48,10 @@ public class LogServiceImpl implements LogService{
             Date endDate = format.parse(date + " 23:59:59'Z'");
             log.info(startDate.toString());
             log.info(endDate.toString());
-            logs = (List)logRepo.findByDateBetween(startDate, endDate);
+            List<Log> rawDate = (List)logRepo.findByPerson(person);
+            logs = rawDate.stream()
+                    .filter(log -> log.getDate().before(endDate) && log.getDate().after(startDate))
+                    .collect(Collectors.toList());
 
         }catch (ParseException e) {
             e.printStackTrace();
