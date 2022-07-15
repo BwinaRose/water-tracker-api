@@ -24,6 +24,9 @@ public class Person {
     private String lastName;
 
     @NonNull
+    private String userName;
+
+    @NonNull
     private Integer age;
 
     @NonNull

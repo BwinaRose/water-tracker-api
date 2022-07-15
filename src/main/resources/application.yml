@@ -1,1 +1,8 @@
-
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/water-tracker-api
+    username: root
+    password: tdd-cd
+  jpa:
+    show-sql: false

@@ -1,5 +1,6 @@
 package com.codedifferently.watertrackerapi.domain.person.services;
 
+import com.codedifferently.watertrackerapi.domain.core.exceptions.ResourceCreationException;
 import com.codedifferently.watertrackerapi.domain.core.exceptions.ResourceNotFoundException;
 import com.codedifferently.watertrackerapi.domain.person.models.Person;
 import com.codedifferently.watertrackerapi.domain.person.repos.PersonRepo;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PersonServiceImpl implements PersonService{
@@ -18,8 +20,11 @@ public class PersonServiceImpl implements PersonService{
     }
 
     @Override
-    public Person create(Person person) {
-        return null;
+    public Person create(Person person) throws ResourceCreationException {
+        Optional<Person> optional = personRepo.findByUserName(person.getUserName());
+        if(optional.isPresent())
+            throw new ResourceCreationException("User with username exists " + person.getUserName());
+        return personRepo.save(person);
     }
 
     @Override
